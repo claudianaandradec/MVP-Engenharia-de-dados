@@ -10,21 +10,29 @@ Sobre livros e avaliações
 2. Qual é a média de avaliação por gênero literário?
 3. Quais livros possuem maior volume de avaliações ao longo do tempo?
 4. Há livros com avaliações baixas, mas muito populares?
-  Sobre comportamento dos usuários
+   
+Sobre comportamento dos usuários
+
 6. Quais usuários são mais ativos na plataforma (maior número de avaliações)?
 7. Existe relação entre idade e tipo de livro avaliado?
 8. Há diferenças de avaliação entre gêneros masculino/feminino?
 9. Usuários de determinadas faixas etárias preferem determinados gêneros?
-   Sobre padrões no catálogo
+
+Sobre padrões no catálogo
+   
 10. Quais editoras possuem melhor média de avaliação?
 11. Existe concentração de livros mal avaliados em determinadas editoras ou autores?
-  Sobre recomendação
+
+Sobre recomendação
+
 13. Quais são os livros mais recomendados para novos usuários (modelo baseado em popularidade)?
 14. É possível sugerir livros semelhantes com base no histórico de avaliações (modelo item-item)?
 15. Quais recomendações diferem entre faixas etárias e gêneros?
+    
 Sobre qualidade dos dados
-16. Existem inconsistências nas avaliações (valores nulos, fora do intervalo ou duplicados)?
-17. Existem livros ou usuários com informações incompletas no dataset?
+
+17. Existem inconsistências nas avaliações (valores nulos, fora do intervalo ou duplicados)?
+18. Existem livros ou usuários com informações incompletas no dataset?
 
 🎯 Objetivo final
 
