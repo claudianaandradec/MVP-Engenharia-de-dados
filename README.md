@@ -50,15 +50,15 @@ Com isso, o MVP pretende demonstrar como pipelines em nuvem podem apoiar experi�
 
 # COLETA DE DADOS
 
-Fonte dos Dados e Processo de Coleta
+# Fonte dos Dados e Processo de Coleta
 
 Os dados utilizados neste projeto foram obtidos de fontes abertas e públicas, eliminando riscos relacionados à confidencialidade das informações. A base principal reúne metadados de livros, avaliações e preferências de usuários, compondo o insumo necessário para o desenvolvimento de um sistema de recomendação. Foram coletados dados entre os anos de 1998 e 2024, conforme a disponibilidade de cada fonte.
 
-Tabela Fato – Interações Usuário–Livro
+# Tabela Fato – Interações Usuário–Livro
 
 A tabela fato do projeto, denominada fato_interacoes_usuarios_gold, foi construída a partir de registros de interações (ratings, reviews e marcações) coletados do portal Goodreads por meio de datasets disponibilizados publicamente no Kaggle.
 
-🔗 Fonte principal:
+🔗 # Fonte principal:
 Goodreads Books Dataset – Kaggle
 (arquivo contendo livros, avaliações, notas e interações de usuários)
 
@@ -80,17 +80,17 @@ Contém: título, autores, ISBN, idioma, número de páginas, ano de publicaçã
 
 Esse conjunto foi selecionado por fornecer metadados essenciais para a qualidade das recomendações baseadas em conteúdo (content-based filtering).
 
-🧑‍💻 Dimensão Usuários (dim_usuarios_gold)
+🧑‍💻 # Dimensão Usuários (dim_usuarios_gold)
 
 Como as bases públicas de recomendação não incluem dados pessoais, somente IDs anônimos, utilizamos os identificadores do próprio dataset:
 
 🔗 Fonte:
-Goodreads Interactions Dataset (ratings.csv / interactions.csv)
+# Goodreads Interactions Dataset (ratings.csv / interactions.csv)
 Contém: user_id, book_id, rating e timestamp.
 
 Por motivos de privacidade, nenhuma informação sensível é incluída, mantendo o dataset totalmente anonimizado e compatível com LGPD.
 
-🏷️ Dimensão Gêneros Literários (dim_generos_gold)
+🏷️ # Dimensão Gêneros Literários (dim_generos_gold)
 
 As informações de gêneros foram extraídas de forma complementar a partir da API pública do Google Books, utilizada apenas para enriquecer metadata faltante em alguns livros.
 
@@ -99,14 +99,119 @@ Google Books API – consulta automatizada para gêneros e categorias literária
 
 Os dados foram coletados em formato JSON e transformados em CSV para carga no pipeline.
 
-🌐 Outras Tabelas Dimensão Criadas Manualmente
+🌐 # Outras Tabelas Dimensão Criadas Manualmente
 
 Algumas tabelas possuíam poucas linhas e foram facilmente criadas manualmente em CSV, com separação por “;”, utilizando um editor de texto. Essas tabelas incluem classificações auxiliares utilizadas no modelo de recomendação:
 
-Popularidade (popularidade_gold)
-
-Faixa de Ano de Publicação (faixa_ano_gold)
-
-Categorias Simplificadas (categoria_simplificada_gold)
+# Popularidade
+(popularidade_gold)
+# Faixa de Ano de Publicação
+(faixa_ano_gold)
+# Categorias Simplificadas
+(categoria_simplificada_gold)
 
 Essas tabelas foram construídas com base na estrutura do próprio dataset e projetadas para auxiliar no enriquecimento do processo analítico.
+
+# MODELAGEM E CATÉLOGO DE DADOS
+
+Para estruturar e organizar os dados de forma eficiente, foi adotado o Esquema Estrela, amplamente utilizado em soluções de Data Warehousing, Business Intelligence e sistemas de recomendação baseados em análises analíticas.
+
+# Estrutura do Esquema Estrela
+
+O esquema estrela do projeto foi construído com uma tabela fato principal contendo as interações entre usuários e livros, acompanhada de cinco tabelas dimensão, que consolidam e organizam os metadados necessários para alimentar o motor de recomendações.
+
+A arquitetura ficou estruturada da seguinte forma:
+
+📘 # Tabela Fato: fato_interacoes_usuarios_gold
+
+A tabela fato contém os registros de comportamento dos usuários, sendo o núcleo central do modelo.
+Cada linha representa uma interação única, como:
+
+* avaliação (rating)
+* marcação de leitura (read / want-to-read)
+* review textual
+* data e hora da interação
+
+Esses dados são a base para algoritmos de recomendação como:
+✔ Filtragem Colaborativa
+✔ Content-Based Filtering
+✔ Modelos Híbridos
+
+📊 # Tabelas Dimensão
+
+Foram criadas tabelas auxiliares para armazenar atributos descritivos, garantindo enriquecimento e consistência das análises por meio de joins.
+
+As dimensões utilizadas foram:
+
+* dim_livros_gold – informações dos livros (título, autor, ISBN, idioma, ano)
+* dim_usuarios_gold – identificador do usuário (anonimizado)
+* dim_generos_gold – gêneros literários e categorias temáticas
+* dim_popularidade_gold – classificação de popularidade baseada em média de notas e volume de reviews
+* dim_ano_publicacao_gold – agrupamentos de ano para análises temporais
+
+Essas dimensões permitem que cada interação seja contextualizada, criando um ambiente analítico robusto para recomendações personalizadas.
+
+# Catálogo de Dados
+📌 # Tabela fato_interacoes_usuarios_gold
+
+A tabela fato foi construída a partir da base original do Goodreads, que continha dezenas de campos sobre avaliações, metadados do livro e comportamento do usuário.
+
+Durante o processo de ETL, vários campos redundantes ou irrelevantes foram removidos, resultando em uma estrutura mais enxuta, organizada e otimizada para análises de recomendação.
+
+A estrutura final da tabela fato contém os seguintes campos:
+📌 Tabelas Dimensão
+
+| Campo            | Descrição                                    |
+| ---------------- | -------------------------------------------- |
+| interaction_id   | Identificador único da interação             |
+| user_id          | Identificador anonimizado do usuário         |
+| book_id          | Identificador único do livro                 |
+| rating           | Nota atribuída pelo usuário                  |
+| review_text      | Texto do comentário (quando disponível)      |
+| interaction_type | Tipo de interação (rating, review, marcação) |
+| timestamp        | Data/hora da interação                       |
+| source           | Origem do dado (Goodreads / Kaggle / API)    |
+
+Resumo da estrutura das dimensões incluídas no modelo:
+# dim_livros_gold
+
+| Campo            | Descrição                 |
+| ---------------- | ------------------------- |
+| book_id          | Chave primária do livro   |
+| title            | Título                    |
+| authors          | Autor(es)                 |
+| isbn             | Identificação ISBN        |
+| language         | Idioma                    |
+| pages            | Número de páginas         |
+| publication_year | Ano de publicação         |
+| avg_rating       | Média geral de avaliações |
+
+# dim_usuarios_gold
+
+| Campo         | Descrição                  |
+| ------------- | -------------------------- |
+| user_id       | Identificador anonimizado  |
+| total_reviews | Volume de reviews escritos |
+| total_ratings | Total de avaliações        |
+
+# dim_generos_gold
+| Campo      | Descrição                |
+| ---------- | ------------------------ |
+| genre_id   | Chave primária           |
+| genre_name | Nome do gênero literário |
+
+# dim_popularidade_gold
+| Campo            | Descrição                        |
+| ---------------- | -------------------------------- |
+| popularity_id    | Chave primária                   |
+| popularity_level | Baixa / Média / Alta             |
+| rule             | Regra utilizada na classificação |
+
+# dim_ano_publicacao_gold
+| Campo       | Descrição                       |
+| ----------- | ------------------------------- |
+| year_group  | Faixa de ano (ex.: "1990–1999") |
+| description | Categoria analítica             |
+
+
+
