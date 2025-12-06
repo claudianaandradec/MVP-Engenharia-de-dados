@@ -59,7 +59,7 @@ Os dados utilizados neste projeto foram obtidos de fontes abertas e públicas, e
 A tabela fato do projeto, denominada fato_interacoes_usuarios_gold, foi construída a partir de registros de interações (ratings, reviews e marcações) coletados do portal Goodreads por meio de datasets disponibilizados publicamente no Kaggle.
 
 🔗 # Fonte principal:
-Goodreads Books Dataset – Kaggle
+Goodreads Books Dataset – Kaggle (https://www.kaggle.com/datasets/zygmunt/goodbooks-10k)
 (arquivo contendo livros, avaliações, notas e interações de usuários)
 
 Esse dataset foi escolhido por possuir volume significativo, metadata completa e padronização adequada para análises avançadas de recomendação.
@@ -85,7 +85,7 @@ Esse conjunto foi selecionado por fornecer metadados essenciais para a qualidade
 Como as bases públicas de recomendação não incluem dados pessoais, somente IDs anônimos, utilizamos os identificadores do próprio dataset:
 
 🔗 Fonte:
-# Goodreads Interactions Dataset (ratings.csv / interactions.csv)
+Goodreads Interactions Dataset (ratings.csv / interactions.csv)
 Contém: user_id, book_id, rating e timestamp.
 
 Por motivos de privacidade, nenhuma informação sensível é incluída, mantendo o dataset totalmente anonimizado e compatível com LGPD.
