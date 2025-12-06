@@ -210,5 +210,6 @@ Resumo da estrutura das dimensões incluídas no modelo:
 | year_group  | Faixa de ano (ex.: "1990–1999") |
 | description | Categoria analítica             |
 
+![image alt](https://github.com/claudianaandradec/MVP-Engenharia-de-dados/blob/eded3ddbbcd87920dfb5296bdf99d7f2e0c339dd/Diagrama%20ER.jpg)
 
 
