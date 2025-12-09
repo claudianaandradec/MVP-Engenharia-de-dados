@@ -212,4 +212,14 @@ Resumo da estrutura das dimensões incluídas no modelo:
 
 ![image alt](https://github.com/claudianaandradec/MVP-Engenharia-de-dados/blob/eded3ddbbcd87920dfb5296bdf99d7f2e0c339dd/Diagrama%20ER.jpg)
 
+Carga (ETL) – Pipeline no Databricks
 
+Nesta etapa será construído o pipeline de ETL (Extração, Transformação e Carga) responsável por ingerir, limpar, padronizar e disponibilizar os dados no Delta Lake.
+
+Utilizaremos a arquitetura Medallion, dividindo o processamento em três camadas:
+
+🥉 Bronze – dados brutos
+
+🥈 Silver – dados tratados e padronizados
+
+🥇 Gold – dados modelados no Esquema Estrela
