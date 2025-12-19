@@ -305,7 +305,7 @@ Informações incompletas? (Sim, tratados nulos na Silver).
 "Há diferenças de avaliação entre gêneros masculino/feminino?"  
 "Usuários de determinadas faixas etárias preferem determinados gêneros?"  
 "Quais recomendações diferem entre faixas etárias e gêneros?"  
-**Motivo:** Privacidade e Anonimização. O dataset público escolhido (Goodbooks-10k/Kaggle) contém apenas o ID do usuário (user_id). Por questões de proteção de dados e conformidade com leis de privacidade (como a LGPD/GDPR), plataformas públicas raramente disponibilizam dados demográficos (Idade, Sexo, Localização) de seus usuários.  
+**Motivo:** Privacidade e Anonimização. O dataset público escolhido (Goodbooks-10k/Kaggle) contém apenas o ID do usuário (user_id). Por questões de proteção de dados e conformidade com leis de privacidade (como a LGPD/GDPR), plataformas públicas raramente disponibilizam dados demográficos (Idade, Sexo, Localização) de seus usuários.    
 "Quais editoras possuem melhor média de avaliação?"    
 **Motivo:** Disponibilidade de Metadados. A coluna publisher não apresentava consistência ou completude suficiente na camada Bronze (muitos nulos ou nomes duplicados como "Penguin" vs "Penguin Books").
 Solução: O escopo foi reorientado para analisar Autores, um dado muito mais confiável e preenchido na base.
