@@ -1,7 +1,7 @@
 # MVP-Engenharia-de-dados
 MVP - Engenharia de dados
 
-# OBJETIVO
+# 1- OBJETIVO
 
 Este MVP tem como objetivo construir um pipeline de dados na nuvem para analisar informações sobre livros, usuários e avaliações, utilizando tecnologias em nuvem com Databricks e seu Delta Lake. O pipeline envolverá as etapas de busca, coleta, modelagem, carga e análise dos dados, com o propósito de fornecer insights sobre padrões de leitura, comportamento dos usuários e características que influenciam a avaliação de livros — além de estabelecer a base para um sistema simples de recomendação.
 
@@ -48,7 +48,7 @@ Visualizações e respostas às perguntas definidas
 Um sistema simples de recomendação baseado nas avaliações
 Com isso, o MVP pretende demonstrar como pipelines em nuvem podem apoiar experiências de recomendação e permitir uma análise eficiente de grandes volumes de dados literários.
 
-# COLETA DE DADOS
+# 2- COLETA DE DADOS
 
 ## Fonte dos Dados e Processo de Coleta
 
@@ -58,7 +58,7 @@ Os dados utilizados neste projeto foram obtidos de fontes abertas e públicas, e
 
 A tabela fato do projeto, denominada fato_interacoes_usuarios_gold, foi construída a partir de registros de interações (ratings, reviews e marcações) coletados do portal Goodreads por meio de datasets disponibilizados publicamente no Kaggle.
 
-🔗 # Fonte principal:
+🔗 **Fonte principal:**
 Goodreads Books Dataset – Kaggle (https://www.kaggle.com/datasets/zygmunt/goodbooks-10k)
 (arquivo contendo livros, avaliações, notas e interações de usuários)
 
@@ -109,11 +109,11 @@ Categorias Simplificadas (categoria_simplificada_gold)
 
 Essas tabelas foram construídas com base na estrutura do próprio dataset e projetadas para auxiliar no enriquecimento do processo analítico.
 
-# MODELAGEM E CATÁLOGO DE DADOS
+# 3- MODELAGEM E CATÁLOGO DE DADOS
 
 Para estruturar e organizar os dados de forma eficiente, foi adotado o Esquema Estrela, amplamente utilizado em soluções de Data Warehousing, Business Intelligence e sistemas de recomendação baseados em análises analíticas.
 
-# Estrutura do Esquema Estrela
+## Estrutura do Esquema Estrela
 
 O esquema estrela do projeto foi construído com uma tabela fato principal contendo as interações entre usuários e livros, acompanhada de cinco tabelas dimensão, que consolidam e organizam os metadados necessários para alimentar o motor de recomendações.
 
@@ -148,7 +148,7 @@ As dimensões utilizadas foram:
 
 Essas dimensões permitem que cada interação seja contextualizada, criando um ambiente analítico robusto para recomendações personalizadas.
 
-# Catálogo de Dados
+## Catálogo de Dados
 📌 # Tabela fato_interacoes_usuarios_gold
 
 A tabela fato foi construída a partir da base original do Goodreads, que continha dezenas de campos sobre avaliações, metadados do livro e comportamento do usuário.
@@ -170,7 +170,7 @@ A estrutura final da tabela fato contém os seguintes campos:
 | source           | Origem do dado (Goodreads / Kaggle / API)    |
 
 Resumo da estrutura das dimensões incluídas no modelo:
-# dim_livros_gold
+### dim_livros_gold
 
 | Campo            | Descrição                 |
 | ---------------- | ------------------------- |
@@ -183,7 +183,7 @@ Resumo da estrutura das dimensões incluídas no modelo:
 | publication_year | Ano de publicação         |
 | avg_rating       | Média geral de avaliações |
 
-# dim_usuarios_gold
+### dim_usuarios_gold
 
 | Campo         | Descrição                  |
 | ------------- | -------------------------- |
@@ -191,24 +191,26 @@ Resumo da estrutura das dimensões incluídas no modelo:
 | total_reviews | Volume de reviews escritos |
 | total_ratings | Total de avaliações        |
 
-# dim_generos_gold
+### dim_generos_gold
 | Campo      | Descrição                |
 | ---------- | ------------------------ |
 | genre_id   | Chave primária           |
 | genre_name | Nome do gênero literário |
 
-# dim_popularidade_gold
+### dim_popularidade_gold
 | Campo            | Descrição                        |
 | ---------------- | -------------------------------- |
 | popularity_id    | Chave primária                   |
 | popularity_level | Baixa / Média / Alta             |
 | rule             | Regra utilizada na classificação |
 
-# dim_ano_publicacao_gold
+### dim_ano_publicacao_gold
 | Campo       | Descrição                       |
 | ----------- | ------------------------------- |
 | year_group  | Faixa de ano (ex.: "1990–1999") |
 | description | Categoria analítica             |
+
+# Diagrma Entidade Relacionamento
 
 ![image alt](https://github.com/claudianaandradec/MVP-Engenharia-de-dados/blob/a3d93143e37b0f6e5e48777a1158f837517be1c7/Diagrama%20ER.jpg)
 
