@@ -211,7 +211,7 @@ Resumo da estrutura das dimensões incluídas no modelo:
 | year_group  | Faixa de ano (ex.: "1990–1999") |
 | description | Categoria analítica             |
 
-# Diagrma Entidade Relacionamento
+# Diagrama Entidade Relacionamento
 
 ![image alt](https://github.com/claudianaandradec/MVP-Engenharia-de-dados/blob/a3d93143e37b0f6e5e48777a1158f837517be1c7/Diagrama%20ER.jpg)
 
@@ -229,7 +229,13 @@ Utilizaremos a arquitetura Medallion, dividindo o processamento em três camadas
 
 **Esta seção está dentro do notebook**
 
-# 5- ANÁLISE DE QUALIDADE DOS DADOS
+# 5- ANÁLISE
+
+**Esta seção está dentro do notebook**
+![image alt]
+![image alt]
+
+## Análise da qualidade dos dados 
 
 Durante a execução do pipeline de dados (arquitetura Medallion: Bronze → Silver → Gold), os dados passaram por diversas verificações de integridade, tipagem e consistência. O objetivo foi garantir que a camada final (Gold) estivesse apta para gerar insights confiáveis sobre o comportamento de leitura.
 Nesta seção, foi detalhada a qualidade dos atributos, os problemas encontrados nos arquivos brutos e as soluções técnicas aplicadas.
@@ -261,7 +267,7 @@ Nulos: Campos textuais essenciais, como original_title, passaram por tratamento 
 Notou-se que alguns livros possuíam médias de avaliação muito altas (5.0), mas com apenas 1 ou 2 votos. Estatisticamente, isso gera um viés de recomendação ("falsos melhores livros").
 Solução: Foram criadas regras de negócio na camada Gold para classificar a popularidade. Nas análises de recomendação, foram aplicados filtros (ex: ratings_count > 100) para garantir que os insights refletissem o consenso da comunidade e não outliers.
 
-# Conclusão
+# 6- Conclusão
 
 Após as etapas de limpeza, tipagem robusta (uso de try_cast) e modelagem dimensional, os dados atingiram um nível de qualidade satisfatório. As inconsistências estruturais foram sanadas na camada Silver, permitindo que a camada Gold responda às perguntas de negócio com precisão e sem interrupções no processamento.
 
