@@ -223,3 +223,28 @@ Utilizaremos a arquitetura Medallion, dividindo o processamento em três camadas
 🥈 Silver – dados tratados e padronizados
 
 🥇 Gold – dados modelados no Esquema Estrela
+
+
+
+ANÁLISE DE QUALIDADE DOS DADOS
+Durante a execução do pipeline de dados (arquitetura Medallion: Bronze → Silver → Gold), os dados passaram por diversas verificações de integridade, tipagem e consistência. O objetivo foi garantir que a camada final (Gold) estivesse apta para gerar insights confiáveis sobre o comportamento de leitura.
+Nesta seção, foi detalahda a qualidade dos atributos, os problemas encontrados nos arquivos brutos e as soluções técnicas aplicadas.
+1. Seleção e Limpeza de Atributos
+O dataset original (books.csv) possuía diversas colunas irrelevantes para o objetivo analítico deste MVP, como URLs de capas de livros (image_url, small_image_url) e múltiplos contadores internos redundantes.
+Para otimizar o armazenamento e a performance das consultas no Data Warehouse, foi realizada a remoção dessas colunas durante a transição para a camada Silver, mantendo apenas os metadados essenciais (título, autor, ano, ISBN e identificadores).
+2. Inconsistências de Tipagem e "Dados Sujos"
+Um dos problemas críticos identificados foi a presença de "sujeira" (dirty data) em colunas numéricas.
+Problema: Na coluna average_rating, que deveria conter apenas valores decimais (double), foram encontrados registros contendo texto (ex: o valor "eng", que pertence à coluna de idioma, foi deslocado para a coluna de nota em algumas linhas corrompidas).
+Solução: foi utilizada a função try_cast do Spark. Diferente de uma conversão comum que falharia o pipeline, essa abordagem converteu os valores inválidos para NULL. Em seguida, aplicamos um filtro (isNotNull) na chave primária para descartar essas linhas corrompidas, garantindo que apenas livros com dados estruturados chegassem à camada Gold.
+3. Tratamento de Identificadores (Chaves Primárias)
+Houve uma inconsistência semântica nos identificadores dos livros. O dataset continha dois IDs distintos: um sequencial do próprio arquivo (book_id) e outro original do site Goodreads (goodreads_book_id).
+Problema: A tabela de tags utilizava o ID do site, enquanto a tabela de ratings utilizava o ID sequencial.
+Solução: Realizado um mapeamento explícito e renomeação dessas colunas na camada Silver. Isso garantiu a integridade referencial nos Joins da camada Gold, permitindo cruzar corretamente as avaliações dos usuários com os gêneros literários.
+4. Tratamento de Valores Nulos e Duplicatas
+Duplicatas: Embora raro, o processo de ingestão poderia gerar duplicidade de processamento. Foi aplicada a função .dropDuplicates() baseada nas chaves naturais (ex: um usuário não pode ter duas avaliações para o mesmo livro; mantivemos apenas a mais recente ou única).
+Nulos: Campos textuais essenciais, como original_title, passaram por tratamento de limpeza (trim) para remover espaços em branco. Para livros sem histórico de avaliações no dataset, foi preenchido os valores nulos de contagem com 0 (zero) para não prejudicar os cálculos de média.
+5. Qualidade Estatística para Recomendação
+Notou-se que alguns livros possuíam médias de avaliação muito altas (5.0), mas com apenas 1 ou 2 votos. Estatisticamente, isso gera um viés de recomendação ("falsos melhores livros").
+Solução: Foram criadas regras de negócio na camada Gold para classificar a popularidade. Nas análises de recomendação, foram aplicados filtros (ex: ratings_count > 100) para garantir que os insights refletissem o consenso da comunidade e não outliers.
+Conclusão
+Após as etapas de limpeza, tipagem robusta (uso de try_cast) e modelagem dimensional, os dados atingiram um nível de qualidade satisfatório. As inconsistências estruturais foram sanadas na camada Silver, permitindo que a camada Gold responda às perguntas de negócio com precisão e sem interrupções no processamento.
