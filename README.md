@@ -279,6 +279,7 @@ Após as etapas de limpeza, tipagem robusta (uso de try_cast) e modelagem dimens
 ✅ **Respondidas com Sucesso**
 
 Estas perguntas foram respondidas diretamente pelas queries SQL e tabelas criadas no Databricks.  
+
 **Sobre livros:**
 Quais são os livros mais bem avaliados? (Sim, query Top 10 por média).  
 Qual é a média de avaliação por gênero literário? (Sim, via tabela bridge_livros_tags).  
@@ -289,7 +290,8 @@ Há livros com avaliações baixas, mas muito populares? (Sim, query de "Livros 
 Quais usuários são mais ativos na plataforma? (Sim, via dim_usuarios).
 
 **Sobre padrões (Adaptado):**  
-Existe concentração de livros mal avaliados em determinados autores? (Sim, adaptação de Editoras para Autores).  
+Existe concentração de livros mal avaliados em determinados autores? (Sim, adaptação de Editoras para Autores).   
+
 **Sobre recomendação:**  
 Quais são os livros mais recomendados para novos usuários? (Sim, query Cold Start/Popularidade).  
 É possível sugerir livros semelhantes (item-item)? (Sim, simulado via filtro de Gêneros/Tags).  
@@ -298,7 +300,7 @@ Quais são os livros mais recomendados para novos usuários? (Sim, query Cold St
 Existem inconsistências? (Sim, detectado o erro "eng" na nota e IDs trocados).  
 Informações incompletas? (Sim, tratados nulos na Silver).  
 
-❌ **Não Respondidas / Escopo Ajustado "Limitações do Dataset".**
+❌ **Não Respondidas / Escopo Ajustado "Limitações do Dataset".**  
 "Existe relação entre idade e tipo de livro avaliado?"  
 "Há diferenças de avaliação entre gêneros masculino/feminino?"  
 "Usuários de determinadas faixas etárias preferem determinados gêneros?"  
