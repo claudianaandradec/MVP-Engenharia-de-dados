@@ -232,6 +232,7 @@ Utilizaremos a arquitetura Medallion, dividindo o processamento em três camadas
 # 5- ANÁLISE
 
 **Esta seção está dentro do notebook**
+[https://github.com/claudianaandradec/MVP-Engenharia-de-dados/blob/ca070b364c734562e9e73238c8c3ca7a5a442dec/Analise_indicadores.ipynb]
 ![image alt]
 ![image alt]
 
