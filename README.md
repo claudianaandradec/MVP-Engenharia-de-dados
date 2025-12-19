@@ -16,28 +16,28 @@ O problema central que este MVP busca resolver é a ausência de uma visão cons
 
 Sobre comportamento dos usuários
    
-6. Quais usuários são mais ativos na plataforma (maior número de avaliações)?
-7. Existe relação entre idade e tipo de livro avaliado?
-8. Há diferenças de avaliação entre gêneros masculino/feminino?
-9. Usuários de determinadas faixas etárias preferem determinados gêneros?
+5. Quais usuários são mais ativos na plataforma (maior número de avaliações)?
+6. Existe relação entre idade e tipo de livro avaliado?
+7. Há diferenças de avaliação entre gêneros masculino/feminino?
+8. Usuários de determinadas faixas etárias preferem determinados gêneros?
 
 Sobre padrões no catálogo
 
-11. Quais editoras possuem melhor média de avaliação?
-12. Existe concentração de livros mal avaliados em determinadas editoras ou autores?
+9. Quais editoras possuem melhor média de avaliação?
+10. Existe concentração de livros mal avaliados em determinadas editoras ou autores?
 
 Sobre recomendação
 
-14. Quais são os livros mais recomendados para novos usuários (modelo baseado em popularidade)?
-15. É possível sugerir livros semelhantes com base no histórico de avaliações (modelo item-item)?
-16. Quais recomendações diferem entre faixas etárias e gêneros?
+11. Quais são os livros mais recomendados para novos usuários (modelo baseado em popularidade)?
+12. É possível sugerir livros semelhantes com base no histórico de avaliações (modelo item-item)?
+13. Quais recomendações diferem entre faixas etárias e gêneros?
 
 Sobre qualidade dos dados
 
 14. Existem inconsistências nas avaliações (valores nulos, fora do intervalo ou duplicados)?
 15. Existem livros ou usuários com informações incompletas no dataset?
 
-🎯 Objetivo final
+🎯 **Objetivo final**
 
 Ao final do projeto, espera-se entregar:
 Um pipeline de dados completo (Raw → Bronze → Silver → Gold)
@@ -50,11 +50,11 @@ Com isso, o MVP pretende demonstrar como pipelines em nuvem podem apoiar experi�
 
 # COLETA DE DADOS
 
-# Fonte dos Dados e Processo de Coleta
+## Fonte dos Dados e Processo de Coleta
 
 Os dados utilizados neste projeto foram obtidos de fontes abertas e públicas, eliminando riscos relacionados à confidencialidade das informações. A base principal reúne metadados de livros, avaliações e preferências de usuários, compondo o insumo necessário para o desenvolvimento de um sistema de recomendação. Foram coletados dados entre os anos de 1998 e 2024, conforme a disponibilidade de cada fonte.
 
-# Tabela Fato – Interações Usuário–Livro
+### Tabela Fato – Interações Usuário–Livro
 
 A tabela fato do projeto, denominada fato_interacoes_usuarios_gold, foi construída a partir de registros de interações (ratings, reviews e marcações) coletados do portal Goodreads por meio de datasets disponibilizados publicamente no Kaggle.
 
