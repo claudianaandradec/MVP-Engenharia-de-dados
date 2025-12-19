@@ -224,7 +224,7 @@ Utilizaremos a arquitetura Medallion, dividindo o processamento em três camadas
 
 🥇 Gold – dados modelados no Esquema Estrela
 
-[carga] https://github.com/claudianaandradec/MVP-Engenharia-de-dados/blob/9cf7d5f2ff76c4f98e6cd3a3268b60943af02f8e/Analise_Exploratoria_engenharia_de_dados.ipynb
+[carga] esta sessão esta no notebook
 
 ANÁLISE DE QUALIDADE DOS DADOS
 Durante a execução do pipeline de dados (arquitetura Medallion: Bronze → Silver → Gold), os dados passaram por diversas verificações de integridade, tipagem e consistência. O objetivo foi garantir que a camada final (Gold) estivesse apta para gerar insights confiáveis sobre o comportamento de leitura.
