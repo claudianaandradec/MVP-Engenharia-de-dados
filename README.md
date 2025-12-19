@@ -210,7 +210,7 @@ Resumo da estrutura das dimensões incluídas no modelo:
 | year_group  | Faixa de ano (ex.: "1990–1999") |
 | description | Categoria analítica             |
 
-![image alt]()
+![image alt](https://github.com/claudianaandradec/MVP-Engenharia-de-dados/blob/a3d93143e37b0f6e5e48777a1158f837517be1c7/Diagrama%20ER.jpg)
 
 Carga (ETL) – Pipeline no Databricks
 
