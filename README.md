@@ -58,7 +58,7 @@ Os dados utilizados neste projeto foram obtidos de fontes abertas e públicas, e
 
 A tabela fato do projeto, denominada fato_interacoes_usuarios_gold, foi construída a partir de registros de interações (ratings, reviews e marcações) coletados do portal Goodreads por meio de datasets disponibilizados publicamente no Kaggle.
 
-🔗 **Fonte principal:**
+🔗 Fonte principal:
 Goodreads Books Dataset – Kaggle (https://www.kaggle.com/datasets/zygmunt/goodbooks-10k)
 (arquivo contendo livros, avaliações, notas e interações de usuários)
 
@@ -66,11 +66,11 @@ Esse dataset foi escolhido por possuir volume significativo, metadata completa e
 
 Os arquivos foram baixados manualmente, no formato CSV, e posteriormente enviados para o repositório GitHub do projeto. O pipeline foi configurado para realizar o ingest dos dados diretamente via API do GitHub, permitindo atualização simplificada e versionada.
 
-Tabelas Dimensão
+###Tabelas Dimensão
 
 As tabelas dimensão foram obtidas de diferentes fontes complementares, conforme detalhado abaixo.
 
-📘 Dimensão Livros (dim_livros_gold)
+📘 **Dimensão Livros (dim_livros_gold)**
 
 Para enriquecer as informações dos livros, foi utilizada a base do dataset:
 
@@ -80,7 +80,7 @@ Contém: título, autores, ISBN, idioma, número de páginas, ano de publicaçã
 
 Esse conjunto foi selecionado por fornecer metadados essenciais para a qualidade das recomendações baseadas em conteúdo (content-based filtering).
 
-🧑‍💻 # Dimensão Usuários (dim_usuarios_gold)
+🧑‍💻 **Dimensão Usuários (dim_usuarios_gold)**
 
 Como as bases públicas de recomendação não incluem dados pessoais, somente IDs anônimos, utilizamos os identificadores do próprio dataset:
 
@@ -90,7 +90,7 @@ Contém: user_id, book_id, rating e timestamp.
 
 Por motivos de privacidade, nenhuma informação sensível é incluída, mantendo o dataset totalmente anonimizado e compatível com LGPD.
 
-🏷️ # Dimensão Gêneros Literários (dim_generos_gold)
+🏷️ **Dimensão Gêneros Literários (dim_generos_gold)**
 
 As informações de gêneros foram extraídas de forma complementar a partir da API pública do Google Books, utilizada apenas para enriquecer metadata faltante em alguns livros.
 
@@ -119,7 +119,7 @@ O esquema estrela do projeto foi construído com uma tabela fato principal conte
 
 A arquitetura ficou estruturada da seguinte forma:
 
-📘 # Tabela Fato: fato_interacoes_usuarios_gold
+📘 **Tabela Fato: fato_interacoes_usuarios_gold**
 
 A tabela fato contém os registros de comportamento dos usuários, sendo o núcleo central do modelo.
 Cada linha representa uma interação única, como:
@@ -134,7 +134,7 @@ Esses dados são a base para algoritmos de recomendação como:
 ✔ Content-Based Filtering
 ✔ Modelos Híbridos
 
-📊 # Tabelas Dimensão
+📊 **Tabelas Dimensão**
 
 Foram criadas tabelas auxiliares para armazenar atributos descritivos, garantindo enriquecimento e consistência das análises por meio de joins.
 
@@ -149,14 +149,15 @@ As dimensões utilizadas foram:
 Essas dimensões permitem que cada interação seja contextualizada, criando um ambiente analítico robusto para recomendações personalizadas.
 
 ## Catálogo de Dados
-📌 # Tabela fato_interacoes_usuarios_gold
+📌 ### Tabela fato_interacoes_usuarios_gold
 
 A tabela fato foi construída a partir da base original do Goodreads, que continha dezenas de campos sobre avaliações, metadados do livro e comportamento do usuário.
 
 Durante o processo de ETL, vários campos redundantes ou irrelevantes foram removidos, resultando em uma estrutura mais enxuta, organizada e otimizada para análises de recomendação.
 
 A estrutura final da tabela fato contém os seguintes campos:
-📌 Tabelas Dimensão
+
+###Tabelas Dimensão
 
 | Campo            | Descrição                                    |
 | ---------------- | -------------------------------------------- |
@@ -214,7 +215,7 @@ Resumo da estrutura das dimensões incluídas no modelo:
 
 ![image alt](https://github.com/claudianaandradec/MVP-Engenharia-de-dados/blob/a3d93143e37b0f6e5e48777a1158f837517be1c7/Diagrama%20ER.jpg)
 
-Carga (ETL) – Pipeline no Databricks
+# 4- Carga (ETL) – Pipeline no Databricks
 
 Nesta etapa será construído o pipeline de ETL (Extração, Transformação e Carga) responsável por ingerir, limpar, padronizar e disponibilizar os dados no Delta Lake.
 
@@ -226,29 +227,34 @@ Utilizaremos a arquitetura Medallion, dividindo o processamento em três camadas
 
 🥇 Gold – dados modelados no Esquema Estrela
 
-[carga] esta sessão esta no notebook
+# 5- ANÁLISE DE QUALIDADE DOS DADOS
 
-ANÁLISE DE QUALIDADE DOS DADOS
 Durante a execução do pipeline de dados (arquitetura Medallion: Bronze → Silver → Gold), os dados passaram por diversas verificações de integridade, tipagem e consistência. O objetivo foi garantir que a camada final (Gold) estivesse apta para gerar insights confiáveis sobre o comportamento de leitura.
-Nesta seção, foi detalahda a qualidade dos atributos, os problemas encontrados nos arquivos brutos e as soluções técnicas aplicadas.
-1. Seleção e Limpeza de Atributos
+Nesta seção, foi detalhada a qualidade dos atributos, os problemas encontrados nos arquivos brutos e as soluções técnicas aplicadas.
+**1. Seleção e Limpeza de Atributos**
+
 O dataset original (books.csv) possuía diversas colunas irrelevantes para o objetivo analítico deste MVP, como URLs de capas de livros (image_url, small_image_url) e múltiplos contadores internos redundantes.
 Para otimizar o armazenamento e a performance das consultas no Data Warehouse, foi realizada a remoção dessas colunas durante a transição para a camada Silver, mantendo apenas os metadados essenciais (título, autor, ano, ISBN e identificadores).
-2. Inconsistências de Tipagem e "Dados Sujos"
+**2. Inconsistências de Tipagem e "Dados Sujos"**
+
 Um dos problemas críticos identificados foi a presença de "sujeira" (dirty data) em colunas numéricas.
 Problema: Na coluna average_rating, que deveria conter apenas valores decimais (double), foram encontrados registros contendo texto (ex: o valor "eng", que pertence à coluna de idioma, foi deslocado para a coluna de nota em algumas linhas corrompidas).
 Solução: foi utilizada a função try_cast do Spark. Diferente de uma conversão comum que falharia o pipeline, essa abordagem converteu os valores inválidos para NULL. Em seguida, aplicamos um filtro (isNotNull) na chave primária para descartar essas linhas corrompidas, garantindo que apenas livros com dados estruturados chegassem à camada Gold.
-3. Tratamento de Identificadores (Chaves Primárias)
+**3. Tratamento de Identificadores (Chaves Primárias)**
+
 Houve uma inconsistência semântica nos identificadores dos livros. O dataset continha dois IDs distintos: um sequencial do próprio arquivo (book_id) e outro original do site Goodreads (goodreads_book_id).
 Problema: A tabela de tags utilizava o ID do site, enquanto a tabela de ratings utilizava o ID sequencial.
 Solução: Realizado um mapeamento explícito e renomeação dessas colunas na camada Silver. Isso garantiu a integridade referencial nos Joins da camada Gold, permitindo cruzar corretamente as avaliações dos usuários com os gêneros literários.
-4. Tratamento de Valores Nulos e Duplicatas
+**4. Tratamento de Valores Nulos e Duplicatas**
+
 Duplicatas: Embora raro, o processo de ingestão poderia gerar duplicidade de processamento. Foi aplicada a função .dropDuplicates() baseada nas chaves naturais (ex: um usuário não pode ter duas avaliações para o mesmo livro; mantivemos apenas a mais recente ou única).
 Nulos: Campos textuais essenciais, como original_title, passaram por tratamento de limpeza (trim) para remover espaços em branco. Para livros sem histórico de avaliações no dataset, foi preenchido os valores nulos de contagem com 0 (zero) para não prejudicar os cálculos de média.
-5. Qualidade Estatística para Recomendação
+**5. Qualidade Estatística para Recomendação**
+
 Notou-se que alguns livros possuíam médias de avaliação muito altas (5.0), mas com apenas 1 ou 2 votos. Estatisticamente, isso gera um viés de recomendação ("falsos melhores livros").
 Solução: Foram criadas regras de negócio na camada Gold para classificar a popularidade. Nas análises de recomendação, foram aplicados filtros (ex: ratings_count > 100) para garantir que os insights refletissem o consenso da comunidade e não outliers.
-Conclusão
+# Conclusão
+
 Após as etapas de limpeza, tipagem robusta (uso de try_cast) e modelagem dimensional, os dados atingiram um nível de qualidade satisfatório. As inconsistências estruturais foram sanadas na camada Silver, permitindo que a camada Gold responda às perguntas de negócio com precisão e sem interrupções no processamento.
 
 # Atingimento do objetivo
