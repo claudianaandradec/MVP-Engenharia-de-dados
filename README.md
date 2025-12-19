@@ -248,3 +248,39 @@ Notou-se que alguns livros possuíam médias de avaliação muito altas (5.0), m
 Solução: Foram criadas regras de negócio na camada Gold para classificar a popularidade. Nas análises de recomendação, foram aplicados filtros (ex: ratings_count > 100) para garantir que os insights refletissem o consenso da comunidade e não outliers.
 Conclusão
 Após as etapas de limpeza, tipagem robusta (uso de try_cast) e modelagem dimensional, os dados atingiram um nível de qualidade satisfatório. As inconsistências estruturais foram sanadas na camada Silver, permitindo que a camada Gold responda às perguntas de negócio com precisão e sem interrupções no processamento.
+
+# Atingimento do objetivo
+✅ Respondidas com Sucesso
+Estas perguntas foram respondidas diretamente pelas queries SQL e tabelas criadas no Databricks.
+Sobre livros:
+Quais são os livros mais bem avaliados? (Sim, query Top 10 por média).
+Qual é a média de avaliação por gênero literário? (Sim, via tabela bridge_livros_tags).
+Quais livros possuem maior volume de avaliações? (Sim, ordenação por contagem).
+Há livros com avaliações baixas, mas muito populares? (Sim, query de "Livros Polêmicos").
+Sobre comportamento:
+Quais usuários são mais ativos na plataforma? (Sim, via dim_usuarios).
+Sobre padrões (Adaptado):
+Existe concentração de livros mal avaliados em determinados autores? (Sim, adaptação de Editoras para Autores).
+Sobre recomendação:
+Quais são os livros mais recomendados para novos usuários? (Sim, query Cold Start/Popularidade).
+É possível sugerir livros semelhantes (item-item)? (Sim, simulado via filtro de Gêneros/Tags).
+Sobre qualidade:
+Existem inconsistências? (Sim, detectado o erro "eng" na nota e IDs trocados).
+Informações incompletas? (Sim, tratados nulos na Silver).
+❌ Não Respondidas / Escopo Ajustado "Limitações do Dataset".
+"Existe relação entre idade e tipo de livro avaliado?"
+"Há diferenças de avaliação entre gêneros masculino/feminino?"
+"Usuários de determinadas faixas etárias preferem determinados gêneros?"
+"Quais recomendações diferem entre faixas etárias e gêneros?"
+Motivo: Privacidade e Anonimização. O dataset público escolhido (Goodbooks-10k/Kaggle) contém apenas o ID do usuário (user_id). Por questões de proteção de dados e conformidade com leis de privacidade (como a LGPD/GDPR), plataformas públicas raramente disponibilizam dados demográficos (Idade, Sexo, Localização) de seus usuários.
+"Quais editoras possuem melhor média de avaliação?"
+Motivo: Disponibilidade de Metadados. A coluna publisher não apresentava consistência ou completude suficiente na camada Bronze (muitos nulos ou nomes duplicados como "Penguin" vs "Penguin Books").
+Solução: O escopo foi reorientado para analisar Autores, um dado muito mais confiável e preenchido na base.
+
+## CONSIDERAÇÕES FINAIS E ADERÊNCIA AO ESCOPO
+Ao final do desenvolvimento do pipeline de dados e das análises exploratórias, foi possível responder à grande maioria das perguntas de negócio propostas, fornecendo uma visão clara sobre os livros mais populares, os gêneros dominantes e o comportamento de engajamento dos usuários (Heavy Users).
+Limitações e Ajustes de Escopo, contudo, algumas perguntas planejadas inicialmente não puderam ser respondidas devido à natureza dos dados coletados:
+Dados Demográficos (Idade e Gênero do Usuário): As análises segmentadas por faixa etária e gênero sexual não foram realizadas. O dataset utilizado (Goodbooks-10k), assim como a maioria das fontes abertas de sistemas de recomendação, submete os dados dos usuários a um processo de anonimização para proteger a privacidade. Portanto, a tabela de usuários restringiu-se a métricas comportamentais (frequência de interação) e não demográficas.
+Análise de Editoras: Durante a etapa de Data Quality na camada Bronze, identificou-se que a informação sobre "Editoras" possuía baixa confiabilidade (muitos valores nulos ou não padronizados). Optou-se estrategicamente por substituir essa análise pela visão de Autores, garantindo maior precisão nos insights sobre a qualidade do catálogo.
+Conclusão
+O MVP cumpriu seu objetivo principal: estruturar um Lakehouse funcional no Databricks, com dados tratados e confiáveis na camada Gold, habilitando tanto análises históricas quanto a base para um sistema de recomendação baseado em conteúdo e popularidade.
