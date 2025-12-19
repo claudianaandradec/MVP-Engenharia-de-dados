@@ -228,6 +228,7 @@ Utilizaremos a arquitetura Medallion, dividindo o processamento em três camadas
 🥇 Gold – dados modelados no Esquema Estrela
 
 **Esta seção está dentro do notebook**
+[Notebook](https://github.com/claudianaandradec/MVP-Engenharia-de-dados/blob/aba50bf3bc49f1f5e9b5217acb694b65820e63c4/Analise_Exploratoria_engenharia_de_dados.ipynb)
 
 # 5- ANÁLISE
 
@@ -277,9 +278,8 @@ Após as etapas de limpeza, tipagem robusta (uso de try_cast) e modelagem dimens
 # Atingimento do objetivo
 ✅ **Respondidas com Sucesso**
 
-Estas perguntas foram respondidas diretamente pelas queries SQL e tabelas criadas no Databricks.
+Estas perguntas foram respondidas diretamente pelas queries SQL e tabelas criadas no Databricks.  
 **Sobre livros:**
-
 Quais são os livros mais bem avaliados? (Sim, query Top 10 por média).  
 Qual é a média de avaliação por gênero literário? (Sim, via tabela bridge_livros_tags).  
 Quais livros possuem maior volume de avaliações? (Sim, ordenação por contagem).  
@@ -289,7 +289,7 @@ Há livros com avaliações baixas, mas muito populares? (Sim, query de "Livros 
 Quais usuários são mais ativos na plataforma? (Sim, via dim_usuarios).
 
 **Sobre padrões (Adaptado):**  
-Existe concentração de livros mal avaliados em determinados autores? (Sim, adaptação de Editoras para Autores).
+Existe concentração de livros mal avaliados em determinados autores? (Sim, adaptação de Editoras para Autores).  
 **Sobre recomendação:**  
 Quais são os livros mais recomendados para novos usuários? (Sim, query Cold Start/Popularidade).  
 É possível sugerir livros semelhantes (item-item)? (Sim, simulado via filtro de Gêneros/Tags).  
@@ -303,8 +303,8 @@ Informações incompletas? (Sim, tratados nulos na Silver).
 "Há diferenças de avaliação entre gêneros masculino/feminino?"  
 "Usuários de determinadas faixas etárias preferem determinados gêneros?"  
 "Quais recomendações diferem entre faixas etárias e gêneros?"  
-**Motivo:** Privacidade e Anonimização. O dataset público escolhido (Goodbooks-10k/Kaggle) contém apenas o ID do usuário (user_id). Por questões de proteção de dados e conformidade com leis de privacidade (como a LGPD/GDPR), plataformas públicas raramente disponibilizam dados demográficos (Idade, Sexo, Localização) de seus usuários.
-"Quais editoras possuem melhor média de avaliação?"  
+**Motivo:** Privacidade e Anonimização. O dataset público escolhido (Goodbooks-10k/Kaggle) contém apenas o ID do usuário (user_id). Por questões de proteção de dados e conformidade com leis de privacidade (como a LGPD/GDPR), plataformas públicas raramente disponibilizam dados demográficos (Idade, Sexo, Localização) de seus usuários.  
+"Quais editoras possuem melhor média de avaliação?"    
 **Motivo:** Disponibilidade de Metadados. A coluna publisher não apresentava consistência ou completude suficiente na camada Bronze (muitos nulos ou nomes duplicados como "Penguin" vs "Penguin Books").
 Solução: O escopo foi reorientado para analisar Autores, um dado muito mais confiável e preenchido na base.
 
