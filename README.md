@@ -311,9 +311,9 @@ Informações incompletas? (Sim, tratados nulos na Silver).
 Solução: O escopo foi reorientado para analisar Autores, um dado muito mais confiável e preenchido na base.
 
 ## CONSIDERAÇÕES FINAIS E ADERÊNCIA AO ESCOPO
-Ao final do desenvolvimento do pipeline de dados e das análises exploratórias, foi possível responder à grande maioria das perguntas de negócio propostas, fornecendo uma visão clara sobre os livros mais populares, os gêneros dominantes e o comportamento de engajamento dos usuários (Heavy Users).
+Ao final do desenvolvimento do pipeline de dados e das análises exploratórias, foi possível responder à grande maioria das perguntas de negócio propostas, fornecendo uma visão clara sobre os livros mais populares, os gêneros dominantes e o comportamento de engajamento dos usuários (Heavy Users).  
 Limitações e Ajustes de Escopo, contudo, algumas perguntas planejadas inicialmente não puderam ser respondidas devido à natureza dos dados coletados:
-Dados Demográficos (Idade e Gênero do Usuário): As análises segmentadas por faixa etária e gênero sexual não foram realizadas. O dataset utilizado (Goodbooks-10k), assim como a maioria das fontes abertas de sistemas de recomendação, submete os dados dos usuários a um processo de anonimização para proteger a privacidade. Portanto, a tabela de usuários restringiu-se a métricas comportamentais (frequência de interação) e não demográficas.
+Dados Demográficos (Idade e Gênero do Usuário): As análises segmentadas por faixa etária e gênero sexual não foram realizadas. O dataset utilizado (Goodbooks-10k), assim como a maioria das fontes abertas de sistemas de recomendação, submete os dados dos usuários a um processo de anonimização para proteger a privacidade. Portanto, a tabela de usuários restringiu-se a métricas comportamentais (frequência de interação) e não demográficas.  
 Análise de Editoras: Durante a etapa de Data Quality na camada Bronze, identificou-se que a informação sobre "Editoras" possuía baixa confiabilidade (muitos valores nulos ou não padronizados). Optou-se estrategicamente por substituir essa análise pela visão de Autores, garantindo maior precisão nos insights sobre a qualidade do catálogo.
-Conclusão
+**Conclusão**  
 O MVP cumpriu seu objetivo principal: estruturar um Lakehouse funcional no Databricks, com dados tratados e confiáveis na camada Gold, habilitando tanto análises históricas quanto a base para um sistema de recomendação baseado em conteúdo e popularidade.
